@@ -68,6 +68,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 const mapboxgl = __webpack_require__(1);
+const mark = __webpack_require__(3);
+const buildMarker = mark.buildMarker;
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2NoYWk2IiwiYSI6ImNqYTl1a2JpcTBjN2UzMnBlcWNleWs2M2YifQ.MKE3KBd5Uu6vUxHWxL_O9w';
 
@@ -78,22 +80,17 @@ const map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
 });
 
-let el = document.createElement('div');
-el.className = 'marker';
-el.style.width = "32px";
-el.style.height = "39px";
-el.style.backgroundImage = "url(http://i.imgur.com/WbMOfMl.png)";
-const marker = new mapboxgl.Marker(el)
-.setLngLat([-74.009151, 40.705086])
-.addTo(map);
+// let el = document.createElement('div');
+// el.className = 'marker';
+// el.style.width = "32px";
+// el.style.height = "39px";
+// el.style.backgroundImage = "url(http://i.imgur.com/WbMOfMl.png)";
+// const marker = new mapboxgl.Marker(el)
+// .setLngLat([-74.009151, 40.705086])
+// .addTo(map);
 
-// var mapboxgl = require('mapbox-gl');
 
-// mapboxgl.accessToken = 'pk.eyJ1Ijoic2NoYWk2IiwiYSI6ImNqYTl1a2JpcTBjN2UzMnBlcWNleWs2M2YifQ.MKE3KBd5Uu6vUxHWxL_O9w';
-// var map = new mapboxgl.Map({
-//   container: 'map',
-//   style: 'mapbox://styles/mapbox/streets-v10'
-// });
+buildMarker('hotel', [-74.009151, 40.705086]).addTo(map);
 
 
 /***/ }),
@@ -674,6 +671,42 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+const mapboxgl = __webpack_require__(1);
+
+function buildMarker(type, coordinates){
+  let el = document.createElement('div');
+  el.className = 'marker';
+  el.style.width = "32px";
+  el.style.height = "39px";
+
+
+  if(type === 'activity'){
+    el.style.backgroundImage = "url(http://i.imgur.com/WbMOfMl.png)";
+
+
+  } else if (type === 'hotel'){
+    el.style.backgroundImage = "url(http://i.imgur.com/D9574Cu.png)";
+
+  } else if (type === 'restaurant') {
+    el.style.backgroundImage = "url(http://i.imgur.com/cqR6pUI.png)";
+  }
+
+
+  return new mapboxgl.Marker(el)
+    .setLngLat(coordinates);
+
+}
+
+module.exports = {
+  buildMarker
+};
 
 
 /***/ })
